@@ -38,6 +38,8 @@ class PlaylistFeature {
 
     @Test
     fun displaysListOfPlaylists(){
+        Thread.sleep(4000)
+
         assertRecyclerViewItemCount(R.id.playlists_list, 10)
 
         onView(allOf(withId(R.id.playlist_name), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
@@ -50,7 +52,7 @@ class PlaylistFeature {
 
         onView(allOf(withId(R.id.playlist_image), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
             .check(matches(withDrawable(R.mipmap.playlist)))
-            .check(matches(isDisplayed()))
+             .check(matches(isDisplayed()))
     }
 
 
