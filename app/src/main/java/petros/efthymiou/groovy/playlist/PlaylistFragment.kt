@@ -24,7 +24,8 @@ class PlaylistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlaylistBinding.inflate(layoutInflater, container, false)
-        service = PlaylistService()
+
+        service = PlaylistService(object : PlaylistAPI{})
         repository = PlaylistRepository(service)
         setupViewModel(repository)
 
