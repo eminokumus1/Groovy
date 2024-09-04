@@ -15,6 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import petros.efthymiou.groovy.playlist.PlaylistRepository
 import petros.efthymiou.groovy.playlist.PlaylistViewModel
+import petros.efthymiou.groovy.utils.BaseUnitTest
 import petros.efthymiou.groovy.utils.MainCoroutineScopeRule
 import petros.efthymiou.groovy.utils.getValueForTest
 import petros.efthymiou.groovy.vo.Playlist
@@ -22,13 +23,9 @@ import java.lang.Exception
 import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
-class PlaylistViewModelShould {
+class PlaylistViewModelShould: BaseUnitTest() {
 
-    @get:Rule
-    var coroutineTestRule = MainCoroutineScopeRule()
 
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: PlaylistViewModel
     private lateinit var repository: PlaylistRepository

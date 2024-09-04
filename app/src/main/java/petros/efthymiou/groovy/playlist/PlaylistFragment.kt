@@ -15,6 +15,7 @@ class PlaylistFragment : Fragment() {
     private lateinit var viewModel: PlaylistViewModel
     private lateinit var viewModelFactory: PlaylistViewModelFactory
     private lateinit var repository: PlaylistRepository
+    private lateinit var service: PlaylistService
 
     private val playlistAdapter = MyPlaylistRecyclerViewAdapter()
 
@@ -23,7 +24,8 @@ class PlaylistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlaylistBinding.inflate(layoutInflater, container, false)
-        repository = PlaylistRepository()
+        service = PlaylistService()
+        repository = PlaylistRepository(service)
         setupViewModel(repository)
 
         return binding.root
