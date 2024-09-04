@@ -1,4 +1,4 @@
-package petros.efthymiou.groovy
+package petros.efthymiou.groovy.playlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +14,7 @@ class PlaylistFragment : Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private lateinit var viewModel: PlaylistViewModel
     private lateinit var viewModelFactory: PlaylistViewModelFactory
+    private lateinit var repository: PlaylistRepository
 
     private val playlistAdapter = MyPlaylistRecyclerViewAdapter()
 
@@ -22,31 +23,34 @@ class PlaylistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlaylistBinding.inflate(layoutInflater, container, false)
-
-        viewModelFactory = PlaylistViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory)[PlaylistViewModel::class.java]
+        repository = PlaylistRepository()
+        setupViewModel(repository)
 
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.playlist.observe(viewLifecycleOwner){
-            playlistAdapter.values = it
+        viewModel.playlists.observe(viewLifecycleOwner){
+            if (it.getOrNull() != null){
+                playlistAdapter.values = it.getOrNull()!!
+
+            }else{
+                TODO()
+            }
         }
 
         binding.playlistsList.adapter = playlistAdapter
 
     }
 
-    companion object {
-
-
-        fun newInstance() =
-            PlaylistFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+    private fun setupViewModel(repository: PlaylistRepository) {
+        viewModelFactory = PlaylistViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[PlaylistViewModel::class.java]
     }
+
+
 }
