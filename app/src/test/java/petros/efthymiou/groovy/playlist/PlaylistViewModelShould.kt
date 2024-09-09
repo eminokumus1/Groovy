@@ -1,6 +1,5 @@
 package petros.efthymiou.groovy.playlist
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -12,14 +11,10 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
-import petros.efthymiou.groovy.playlist.PlaylistRepository
-import petros.efthymiou.groovy.playlist.PlaylistViewModel
 import petros.efthymiou.groovy.utils.BaseUnitTest
-import petros.efthymiou.groovy.utils.MainCoroutineScopeRule
+import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 import petros.efthymiou.groovy.vo.Playlist
-import java.lang.Exception
 import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
@@ -46,7 +41,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
     @Test
     fun getPlaylistsFromRepository(): Unit = runBlocking {
 
-        viewModel = mockSuccesfulCase()
+        viewModel = mockSuccessfulCase()
         viewModel.playlists.getValueForTest()
 
 
@@ -55,7 +50,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
 
     @Test
     fun emitsPlaylistFromRepository(): Unit = runBlocking {
-        viewModel = mockSuccesfulCase()
+        viewModel = mockSuccessfulCase()
 
         assertEquals(expected, viewModel.playlists.getValueForTest())
     }
@@ -66,6 +61,39 @@ class PlaylistViewModelShould: BaseUnitTest() {
 
         assertEquals(exception, viewModel.playlists.getValueForTest()?.exceptionOrNull() )
         
+    }
+
+    @Test
+    fun showSpinnerWhileLoading(): Unit = runBlocking {
+        viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+
+            assertEquals(true, values[0])
+        }
+    }
+
+    @Test
+    fun closeLoaderAfterPlaylistsLoad(): Unit = runBlocking{
+        viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+
+            assertEquals(false, values.last())
+        }
+    }
+
+    @Test
+    fun closeLoaderAfterError(): Unit = runBlocking{
+        viewModel = mockErrorCase()
+
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+
+            assertEquals(false, values.last())
+        }
     }
 
     private fun mockErrorCase(): PlaylistViewModel {
@@ -81,7 +109,7 @@ class PlaylistViewModelShould: BaseUnitTest() {
     }
 
 
-    private fun mockSuccesfulCase(): PlaylistViewModel {
+    private fun mockSuccessfulCase(): PlaylistViewModel {
         runBlocking {
             whenever(repository.getPlaylists()).thenReturn(
                 flow {
