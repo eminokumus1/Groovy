@@ -39,7 +39,7 @@ class MyPlaylistRecyclerViewAdapter(
             binding.run{
                 playlistName.text = playlist.name
                 playlistCategory.text = playlist.category
-                playlistImage.setImageResource(R.mipmap.playlist)
+                playlistImage.setImageResource(playlist.image)
             }
         }
     }

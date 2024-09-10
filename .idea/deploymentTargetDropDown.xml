@@ -8,12 +8,6 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="displaysLoaderWhileFetchingPlaylists()">
-        <State />
-      </entry>
-      <entry key="hideLoader()">
-        <State />
-      </entry>
     </value>
   </component>
 </project>

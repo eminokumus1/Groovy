@@ -11,13 +11,14 @@ import org.junit.Before
 import org.junit.Test
 import petros.efthymiou.groovy.utils.BaseUnitTest
 import petros.efthymiou.groovy.vo.Playlist
+import petros.efthymiou.groovy.vo.PlaylistRaw
 import java.lang.RuntimeException
 
 class PlaylistServiceShould : BaseUnitTest() {
 
     private lateinit var service: PlaylistService
     private lateinit var api: PlaylistAPI
-    private val playlists = mock<List<Playlist>>()
+    private val playlistsRaw = mock<List<PlaylistRaw>>()
 
     @Before
     fun setup() {
@@ -37,7 +38,7 @@ class PlaylistServiceShould : BaseUnitTest() {
     fun convertValuesToFlowResultAndEmitsThem(): Unit = runBlocking {
         mockSuccessfulCase()
 
-        assertEquals(Result.success(playlists), service.fetchPlaylists().first())
+        assertEquals(Result.success(playlistsRaw), service.fetchPlaylists().first())
     }
 
 
@@ -56,7 +57,7 @@ class PlaylistServiceShould : BaseUnitTest() {
     }
 
     private suspend fun mockSuccessfulCase() {
-        whenever(api.fetchAllPlaylists()).thenReturn(playlists)
+        whenever(api.fetchAllPlaylists()).thenReturn(playlistsRaw)
 
         service = PlaylistService(api)
     }
