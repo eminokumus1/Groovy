@@ -51,7 +51,7 @@ class PlaylistServiceShould : BaseUnitTest() {
     }
 
     private suspend fun mockErrorCase() {
-        whenever(api.fetchAllPlaylists()).thenThrow(RuntimeException("Network problem"))
+        whenever(api.fetchAllPlaylists()).thenThrow(RuntimeException("Something went wrong"))
 
         service = PlaylistService(api)
     }

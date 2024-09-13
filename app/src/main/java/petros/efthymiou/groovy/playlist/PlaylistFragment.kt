@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-const val BASE_URL = "http://192.168.1.58:3000/"
+const val BASE_URL = "http://192.168.0.23:3000/"
 
 @AndroidEntryPoint
 class PlaylistFragment : Fragment() {

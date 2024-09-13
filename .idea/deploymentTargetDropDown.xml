@@ -2,7 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PlaylistFeature">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="displayRockImageForRockListItems()">
+        <State />
+      </entry>
+      <entry key="displaysLoaderWhileFetchingPlaylists()">
         <State />
       </entry>
     </value>
