@@ -10,9 +10,11 @@ import petros.efthymiou.groovy.databinding.PlaylistItemBinding
 
 
 class MyPlaylistRecyclerViewAdapter(
+    private val listener: (String) -> Unit
 ) : RecyclerView.Adapter<MyPlaylistRecyclerViewAdapter.ViewHolder>() {
 
     var values: List<Playlist> = listOf()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -40,6 +42,9 @@ class MyPlaylistRecyclerViewAdapter(
                 playlistName.text = playlist.name
                 playlistCategory.text = playlist.category
                 playlistImage.setImageResource(playlist.image)
+                root.setOnClickListener {
+                    listener(playlist.id)
+                }
             }
         }
     }

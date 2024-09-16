@@ -6,12 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.OkHttpClient
 import petros.efthymiou.groovy.databinding.FragmentPlaylistBinding
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 const val BASE_URL = "http://192.168.0.23:3000/"
@@ -27,7 +24,10 @@ class PlaylistFragment : Fragment() {
     lateinit var viewModelFactory: PlaylistViewModelFactory
 
 
-    private val playlistAdapter = MyPlaylistRecyclerViewAdapter()
+    private val playlistAdapter = MyPlaylistRecyclerViewAdapter { id ->
+        val action = PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailsFragment(id)
+        findNavController(this).navigate(action)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

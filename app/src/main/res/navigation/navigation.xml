@@ -9,5 +9,18 @@
         android:id="@+id/playlistFragment"
         android:name="petros.efthymiou.groovy.playlist.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistDetailsFragment"
+            app:destination="@id/playlistDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistDetailsFragment"
+        android:name="petros.efthymiou.groovy.playlistdetails.PlaylistDetailsFragment"
+        android:label="fragment_playlist_details"
+        tools:layout="@layout/fragment_playlist_details" >
+        <argument
+            android:name="playlistId"
+            app:argType="string" />
+    </fragment>
 </navigation>
