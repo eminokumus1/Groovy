@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import petros.efthymiou.groovy.R
 import petros.efthymiou.groovy.databinding.FragmentPlaylistBinding
 import javax.inject.Inject
 
@@ -25,8 +26,10 @@ class PlaylistFragment : Fragment() {
 
 
     private val playlistAdapter = MyPlaylistRecyclerViewAdapter { id ->
-        val action = PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailsFragment(id)
-        findNavController(this).navigate(action)
+        val bundle = Bundle()
+        bundle.putString("id", id)
+
+        findNavController(this).navigate(R.id.action_playlistFragment_to_playlistDetailsFragment,bundle)
     }
 
     override fun onCreateView(

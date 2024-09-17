@@ -5,18 +5,52 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import petros.efthymiou.groovy.R
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
+import petros.efthymiou.groovy.databinding.FragmentPlaylistDetailsBinding
+import javax.inject.Inject
 
-
-
-
+@AndroidEntryPoint
 class PlaylistDetailsFragment : Fragment() {
+    private lateinit var binding: FragmentPlaylistDetailsBinding
+
+    lateinit var viewModel: PlaylistDetailsViewModel
+
+    @Inject
+    lateinit var viewModelFactory: PlaylistDetailsViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_playlist_details, container, false)
+        binding = FragmentPlaylistDetailsBinding.inflate(layoutInflater, container, false)
+
+        val id = arguments?.getString("id")
+
+        setupViewModel()
+
+        if (id != null) {
+            viewModel.getPlaylistDetails(id)
+        }
+
+        observeLiveData()
+
+
+        return binding.root
+    }
+
+    private fun observeLiveData() {
+        viewModel.playlistDetails.observe(viewLifecycleOwner) { newPlaylistDetails ->
+            if (newPlaylistDetails.getOrNull() != null) {
+                binding.playlistName.text = newPlaylistDetails.getOrNull()!!.name
+                binding.playlistDetails.text = newPlaylistDetails.getOrNull()!!.details
+            }
+        }
+    }
+
+    private fun setupViewModel() {
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(PlaylistDetailsViewModel::class.java)
     }
 
 }

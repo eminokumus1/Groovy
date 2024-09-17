@@ -8,4 +8,5 @@ interface PlaylistAPI {
 
     @GET("playlists")
     suspend fun fetchAllPlaylists(): List<PlaylistRaw>
+
 }

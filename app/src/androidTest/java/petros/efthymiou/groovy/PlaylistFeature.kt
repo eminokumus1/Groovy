@@ -23,8 +23,7 @@ import petros.efthymiou.groovy.playlist.idlingResource
 class PlaylistFeature: BaseUITest() {
 
 
-    val mActivityRule = ActivityScenarioRule(MainActivity::class.java)
-        @Rule get
+
 
     @Test
     fun displayScreenTitle() {
