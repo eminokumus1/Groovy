@@ -1,10 +1,8 @@
 package petros.efthymiou.groovy.playlist
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import petros.efthymiou.groovy.vo.Playlist
 import petros.efthymiou.groovy.vo.PlaylistRaw
 import javax.inject.Inject
 

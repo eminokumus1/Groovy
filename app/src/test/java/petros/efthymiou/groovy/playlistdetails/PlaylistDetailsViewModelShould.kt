@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
 import petros.efthymiou.groovy.utils.BaseUnitTest
+import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 import petros.efthymiou.groovy.vo.PlaylistDetails
 import java.lang.RuntimeException
@@ -54,6 +55,31 @@ class PlaylistDetailsViewModelShould: BaseUnitTest(){
         viewModel.getPlaylistDetails(id)
 
         assertEquals(Result.failure<PlaylistDetails>(exception), viewModel.playlistDetails.getValueForTest())
+    }
+
+    @Test
+    fun showLoaderWhileLoading(): Unit = runBlocking {
+        viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.getPlaylistDetails(id)
+            viewModel.playlistDetails.getValueForTest()
+
+            assertEquals(true, values[0])
+        }
+    }
+
+    @Test
+    fun closeLoaderAfterPlaylistDetailsLoad(): Unit = runBlocking {
+        viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.getPlaylistDetails(id)
+
+            viewModel.playlistDetails.getValueForTest()
+
+            assertEquals(false, values.last())
+        }
     }
 
     private suspend fun mockSuccessfulCase(): PlaylistDetailsViewModel {
